@@ -6,7 +6,25 @@ export const sharedContent = [
 ];
 
 export const sharedConfig: UserConfig = {
+  layers: {
+    root: -100,
+  },
+
+  preflights: [
+    {
+      layer: "root",
+      getCSS: () => `:root {
+         --gray-500: <b:eval expr='data:vars.status_dark != &quot;transparent&quot; ? data:vars.status_dark : &quot;#000000&quot;'/>
+        }`,
+    },
+  ],
   theme: {
+    colors: {
+      gray: {
+        500: "var(--gray-500)",
+      },
+      white: "var(--white)",
+    },
     // M.G
     animation: {
       keyframes: {

@@ -250,7 +250,7 @@ final class li extends DomComponent {
 /// The &lt;hr&gt; HTML element represents a thematic break between paragraph-level elements: for example, a change of scene in a story, or a shift of topic within a section.
 /// {@endtemplate}
 final class hr extends DomComponent {
-  const hr({super.attributes}):super(null);
+  const hr({super.attributes}) : super(null);
   @override
   String get tag => 'hr';
   @override
@@ -271,6 +271,12 @@ final class p extends DomComponent {
 /// {@endtemplate}
 final class pre extends DomComponent {
   const pre(super.children, {super.attributes});
+  @override
+  String get tag => 'pre';
+}
+
+final class style extends DomComponent {
+  const style(super.children, {super.attributes});
   @override
   String get tag => 'pre';
 }
