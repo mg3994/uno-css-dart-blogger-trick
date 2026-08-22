@@ -30,7 +30,7 @@ final Component plusUiTemplate = Fragment([
                     },
                   ),
                   script(
-                    null,
+               
                   {
                       'async': 'async',
                       'src': 'https://cdn.ampproject.org/v0.js',

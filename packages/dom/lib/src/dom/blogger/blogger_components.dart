@@ -117,7 +117,7 @@ class BElse extends DomComponent {
   @override
   String get tag => 'b:else';
 
-  const BElse() : super();
+  const BElse();
 
   @override
   Iterable<Component> build() => [];
@@ -137,7 +137,7 @@ class BArg extends DomComponent {
         value != null || exprValue != null,
         'BArg requires either value or exprValue to be provided.',
       ),
-      super(null, {
+      super({
         'name': name,
         if (exprValue != null)
           'expr:value': exprValue
@@ -177,7 +177,7 @@ class BData extends DomComponent {
   @override
   String get tag => 'data:$value';
 
-  const BData({required this.value}) : super(null);
+  const BData({required this.value});
 
   @override
   Iterable<Component> build() => [];
@@ -267,7 +267,7 @@ class BAttr extends DomComponent {
   String get tag => 'b:attr';
 
   BAttr({required this.name, this.value, this.exprValue, this.cond})
-    : super(null, {
+    : super({
         'name': name,
         if (exprValue != null)
           'expr:value': exprValue
@@ -302,7 +302,7 @@ class BClass extends DomComponent {
         name != null || exprName != null,
         'BClass requires either name or exprName to be provided.',
       ),
-      super(null, {
+      super({
         if (exprName != null)
           'expr:name': exprName
         else if (name != null && name.isNotEmpty)
