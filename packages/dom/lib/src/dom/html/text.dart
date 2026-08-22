@@ -84,7 +84,7 @@ final class small<A, B> extends DomComponent<A, B> {
   String get tag => 'small';
 }
 
-/// {@template_blogger_theme.html.span}
+/// {@template blogger_theme.html.span}
 /// The &lt;span&gt; HTML element is a generic inline container for phrasing content, which does not inherently represent anything.
 /// {@endtemplate}
 final class span<A, B> extends DomComponent<A, B> {
