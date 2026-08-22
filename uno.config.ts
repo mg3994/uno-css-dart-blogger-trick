@@ -54,7 +54,10 @@ export const sharedConfig: UserConfig = {
     presetWind3({
       preflight: false, // Disables the heavy block of --un-* preflight variables
 
-      dark: "media", // M.G
+      dark: {
+        dark: ".amp-dark-mode",
+        light: ":not(.amp-dark-mode)",
+      },
     }),
   ],
   rules: [
