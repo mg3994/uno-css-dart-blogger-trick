@@ -1,6 +1,5 @@
 import '../../framework/framework.dart'
-    show DomComponent, Component, CustomDomComponent;
-import '../raw_text/raw_text.dart' show Text, RawText;
+    show DomComponent, Component, CustomDomComponent, Text, RawText;
 
 /// A Blogger section container, mapped to the `b:section` template tag.
 class BSection extends DomComponent {

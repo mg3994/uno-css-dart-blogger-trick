@@ -2,10 +2,9 @@
 // Extensions
 // =============================================================================
 
-import '../../dom/raw_text/raw_text.dart' show Text;
+import "helpers.dart";
 import '../framework.dart'
-    show Component, DomComponent, Fragment, CustomDomComponent;
-import 'dom_render.dart' show Renderer;
+    show Component, DomComponent, Fragment, CustomDomComponent, Text;
 
 /// Converts string literals into [Text] components.
 extension StringAsComponent on String {

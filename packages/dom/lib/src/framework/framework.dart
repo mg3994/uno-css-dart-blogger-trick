@@ -2,6 +2,8 @@ import 'package:collection/collection.dart';
 
 import '../dom/raw_text/raw_text.dart';
 
+export '../dom/raw_text/raw_text.dart';
+
 /// A node in the Blogger theme component tree.
 abstract class Component {
   const Component();
@@ -37,8 +39,8 @@ abstract interface class Element extends Component {
 ///
 /// Positional arguments are detected by their types.
 /// The order does not matter:
-/// Map<String, String>  -> attributes
-/// Iterable<Component>  -> children
+/// Map &lt;String, String&gt;  -> attributes
+/// Iterable &lt;Component&gt;  -> children
 abstract class DomComponent<A, B> implements Element {
   final A? _first;
   final B? _second;

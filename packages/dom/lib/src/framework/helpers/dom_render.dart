@@ -1,6 +1,5 @@
-import '../../dom/raw_text/raw_text.dart' show Text;
-import '../framework.dart' show Component, DomComponent;
-import 'escape.dart' show escapeXml;
+import '../framework.dart';
+import 'helpers.dart';
 
 /// Renders a [Component] tree to an XML string.
 class Renderer {
@@ -17,7 +16,7 @@ class Renderer {
       sb.write(component.escape ? escapeXml(component.value) : component.value);
     } else if (component is DomComponent) {
       sb.write('<${component.tag}');
-      
+
       // Because `attributes` is now never null, we can safely check `isNotEmpty`
       if (component.attributes.isNotEmpty) {
         for (var entry in component.attributes.entries) {
