@@ -14,24 +14,24 @@ final Component plusUiTemplate = Fragment([
         children: [
           CustomDomComponent(
             'head',
-            children: [
+             [
               const title([BData(value: 'view.title.escaped')]),
               BInclude(name: 'all-head-content', data: 'blog'),
               const XmlComment(' Conditional Scripts Loading '),
               BIf(
                 cond: 'data:is_amp == "true"',
                 children: const [
-                  meta(attributes: {'charset': 'utf-8'}),
+                  meta({'charset': 'utf-8'}),
                   meta(
-                    attributes: {
+              {
                       'content':
                           'width=device-width,minimum-scale=1,initial-scale=1',
                       'name': 'viewport',
                     },
                   ),
                   script(
-                    null,
-                    attributes: {
+                  
+                     {
                       'async': 'async',
                       'src': 'https://cdn.ampproject.org/v0.js',
                     },
@@ -45,7 +45,7 @@ final Component plusUiTemplate = Fragment([
                     '//<![CDATA[\nconsole.log("Loading standard dynamic JavaScript...");\n//]]>',
                   ),
                 ],
-                attributes: {'type': 'text/javascript'},
+                {'type': 'text/javascript'},
               ),
               BIf(
                 cond: 'false',
@@ -123,7 +123,7 @@ final Component plusUiTemplate = Fragment([
                         BElse(),
                         const h1(
                           [Component.text('AMP / Non-AMP Tricking System')],
-                          attributes: {'class': "m-1"},
+                       {'class': "m-1"},
                         ),
                         const p([
                           Component.text(
@@ -158,7 +158,7 @@ final Component plusUiTemplate = Fragment([
         ],
       ),
     ],
-    attributes: const {
+   const {
       'b:css': 'false',
       'b:defaultwidgetversion': '2',
       'b:layoutsVersion': '3',

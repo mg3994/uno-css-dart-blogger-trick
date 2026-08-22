@@ -3,7 +3,8 @@
 // =============================================================================
 
 import '../../dom/raw_text/raw_text.dart' show Text;
-import '../framework.dart' show Component, DomComponent, Fragment, CustomDomComponent;
+import '../framework.dart'
+    show Component, DomComponent, Fragment, CustomDomComponent;
 import 'dom_render.dart' show Renderer;
 
 /// Converts string literals into [Text] components.
@@ -23,11 +24,18 @@ extension RenderComponentExtension on Component {
 /// Extension to easily create dynamic/custom [DomComponent]s using any tag name.
 extension CustomDomComponentExtension on String {
   /// Creates a custom [DomComponent] using this string as the tag name.
-  DomComponent tag({
-    List<Component>? children,
-    Map<String, String>? attributes,
-  }) {
-    return CustomDomComponent(this, children: children, attributes: attributes);
+  ///
+  /// Positional arguments are detected by their types:
+  /// Map<String, String>  -> attributes
+  /// Iterable<Component>  -> children
+  ///
+  /// Example:
+  /// ```dart
+  /// "my-tag".tag({'class': 'demo'}, [Text('Hello')]);
+  /// "my-tag".tag([Text('Hello')], {'class': 'demo'}); // Also works!
+  /// ```
+  DomComponent<A, B> tag<A, B>([A? first, B? second]) {
+    return CustomDomComponent<A, B>(this, first, second);
   }
 }
 

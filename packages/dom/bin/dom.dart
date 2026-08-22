@@ -14,16 +14,16 @@ final Component plusUiTemplate = Fragment([
         children: [
           CustomDomComponent(
             'head',
-            children: [
+          [
               const title([BData(value: 'view.title.escaped')]),
               BInclude(name: 'all-head-content', data: 'blog'),
               const XmlComment(' Conditional Scripts Loading '),
               BIf(
                 cond: 'data:is_amp == "true"',
                 children: const [
-                  meta(attributes: {'charset': 'utf-8'}),
+                  meta({'charset': 'utf-8'}),
                   meta(
-                    attributes: {
+                 {
                       'content':
                           'width=device-width,minimum-scale=1,initial-scale=1',
                       'name': 'viewport',
@@ -31,7 +31,7 @@ final Component plusUiTemplate = Fragment([
                   ),
                   script(
                     null,
-                    attributes: {
+                  {
                       'async': 'async',
                       'src': 'https://cdn.ampproject.org/v0.js',
                     },
@@ -41,8 +41,8 @@ final Component plusUiTemplate = Fragment([
               BElse(),
               const CustomDomComponent(
                 'script',
-                attributes: {'type': 'text/javascript'},
-                children: [
+                {'type': 'text/javascript'},
+                [
                   RawText(
                     '//<![CDATA[\nconsole.log("Loading standard dynamic JavaScript...");\n//]]>',
                   ),
@@ -58,112 +58,109 @@ final Component plusUiTemplate = Fragment([
               ),
             ],
           ),
-          CustomDomComponent(
-            'body',
-            children: [
-              BSection(
-                id: 'main',
-                showaddelement: false,
-                children: [
-                  BWidget(
-                    id: 'Blog1',
-                    locked: true,
-                    title: 'Blog Posts',
-                    type: 'Blog',
-                    version: 2,
-                    children: [
-                      BIncludable(
-                        id: 'main',
-                        children: [
-                          BIf(
-                            cond: 'data:view.isPost',
-                            children: [
-                              BLoop(
-                                values: 'data:posts',
-                                varName: 'post',
-                                children: [
-                                  BInclude(
-                                    name: 'post-metadataJSON',
-                                    data: 'post',
-                                  ),
-                                  BIf(
-                                    cond: 'data:post.body not contains "</head><body>"',
-                                    children: const [
-                                      RawText('&lt;/head&gt;&lt;body&gt;'),
-                                    ],
-                                  ),
-                                  BIf(
-                                    cond: 'data:post.body not contains "<amp-story"',
-                                    children: const [
-                                      Component.text(
-                                        'The post body must contain ',
-                                      ),
-                                      CustomDomComponent(
-                                        'code',
-                                        children: [
-                                          Component.text('&lt;amp-story&gt;'),
-                                        ],
-                                      ),
-                                      Component.text(' tag.'),
-                                    ],
-                                  ),
-                                  BElseIf(
-                                    cond: 'data:post.body not contains "<amp-story-page"',
-                                  ),
-                                  const Component.text(
-                                    'The post body must contain at least one ',
-                                  ),
-                                  const CustomDomComponent(
-                                    'code',
-                                    children: [
-                                      Component.text('&lt;amp-story-page&gt;'),
-                                    ],
-                                  ),
-                                  const Component.text(' tag in '),
-                                  const CustomDomComponent(
-                                    'code',
-                                    children: [
-                                      Component.text('&lt;amp-story&gt;'),
-                                    ],
-                                  ),
-                                  const Component.text('.'),
-                                  BElse(),
-                                  const BData(value: 'post.body'),
-                                ],
-                              ),
-                            ],
-                          ),
-                          BElse(),
-                          const CustomDomComponent(
-                            'h1',
-                            children: [
-                              Component.text('AMP / Non-AMP Tricking System'),
-                            ],
-                          ),
-                          const CustomDomComponent(
-                            'p',
-                            children: [
-                              Component.text(
-                                'Template updated cleanly without trailing artifacts.',
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              BIf(
-                cond: 'data:is_amp == "true"',
-                children: const [
-                  RawText(
-                    "&lt;textarea id='template_widgets_js' disabled readonly hidden aria-hidden='true' class='notranslate'&gt;",
-                  ),
-                ],
-              ),
-            ],
-          ),
+          CustomDomComponent('body', [
+            BSection(
+              id: 'main',
+              showaddelement: false,
+              children: [
+                BWidget(
+                  id: 'Blog1',
+                  locked: true,
+                  title: 'Blog Posts',
+                  type: 'Blog',
+                  version: 2,
+                  children: [
+                    BIncludable(
+                      id: 'main',
+                      children: [
+                        BIf(
+                          cond: 'data:view.isPost',
+                          children: [
+                            BLoop(
+                              values: 'data:posts',
+                              varName: 'post',
+                              children: [
+                                BInclude(
+                                  name: 'post-metadataJSON',
+                                  data: 'post',
+                                ),
+                                BIf(
+                                  cond: 'data:post.body not contains "</head><body>"',
+                                  children: const [
+                                    RawText('&lt;/head&gt;&lt;body&gt;'),
+                                  ],
+                                ),
+                                BIf(
+                                  cond: 'data:post.body not contains "<amp-story"',
+                                  children: const [
+                                    Component.text(
+                                      'The post body must contain ',
+                                    ),
+                                    CustomDomComponent(
+                                      'code',
+                                      [
+                                        Component.text('&lt;amp-story&gt;'),
+                                      ],
+                                    ),
+                                    Component.text(' tag.'),
+                                  ],
+                                ),
+                                BElseIf(
+                                  cond: 'data:post.body not contains "<amp-story-page"',
+                                ),
+                                const Component.text(
+                                  'The post body must contain at least one ',
+                                ),
+                                const CustomDomComponent(
+                                  'code',
+                               [
+                                    Component.text('&lt;amp-story-page&gt;'),
+                                  ],
+                                ),
+                                const Component.text(' tag in '),
+                                const CustomDomComponent(
+                                  'code',
+                                  [
+                                    Component.text('&lt;amp-story&gt;'),
+                                  ],
+                                ),
+                                const Component.text('.'),
+                                BElse(),
+                                const BData(value: 'post.body'),
+                              ],
+                            ),
+                          ],
+                        ),
+                        BElse(),
+                        const CustomDomComponent(
+                          'h1',
+                        [
+                            Component.text('AMP / Non-AMP Tricking System'),
+                          ],
+                        ),
+                        const CustomDomComponent(
+                          'p',
+                          [
+                            Component.text(
+                              'Template updated cleanly without trailing artifacts.',
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            BIf(
+              cond: 'data:is_amp == "true"',
+              children: const [
+                RawText(
+                  "&lt;textarea id='template_widgets_js' disabled readonly hidden aria-hidden='true' class='notranslate'&gt;",
+                ),
+              ],
+            ),
+          ]),
           BIf(
             cond: 'data:is_amp == "true"',
             children: const [RawText('&lt;/textarea&gt;')],
@@ -177,7 +174,7 @@ final Component plusUiTemplate = Fragment([
         ],
       ),
     ],
-    attributes: const {
+    const {
       'b:css': 'false',
       'b:defaultwidgetversion': '2',
       'b:layoutsVersion': '3',

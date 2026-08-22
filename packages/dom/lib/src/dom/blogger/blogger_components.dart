@@ -22,18 +22,15 @@ class BSection extends DomComponent {
     this.showaddelement,
     this.growth,
     this.preferred,
-  }) : super(
-         children,
-         attributes: {
-           'id': id,
-           'class': ?className,
-           'maxwidgets': ?maxwidgets?.toString(),
-           if (showaddelement != null)
-             'showaddelement': showaddelement ? 'yes' : 'no',
-           'growth': ?growth,
-           'preferred': ?preferred?.toString(),
-         },
-       );
+  }) : super(children, {
+         'id': id,
+         'class': ?className,
+         'maxwidgets': ?maxwidgets?.toString(),
+         if (showaddelement != null)
+           'showaddelement': showaddelement ? 'yes' : 'no',
+         'growth': ?growth,
+         'preferred': ?preferred?.toString(),
+       });
 }
 
 /// Marks where widget settings can be declared inside a Blogger layout.
@@ -52,7 +49,7 @@ class BWidgetSetting extends DomComponent {
   String get tag => 'b:widget-setting';
 
   BWidgetSetting({required this.name, Iterable<Component>? children})
-    : super(children, attributes: {'name': name});
+    : super(children, {'name': name});
 }
 
 /// Models a Blogger widget definition in the template.
@@ -79,19 +76,16 @@ class BWidget extends DomComponent {
     this.version,
     this.isVisible,
     Iterable<Component>? children,
-  }) : super(
-         children,
-         attributes: {
-           'id': id,
-           'type': type,
-           'title': ?title,
-           'locked': ?locked?.toString(),
-           'pageType': ?pageType,
-           'mobile': ?mobile,
-           'version': ?version?.toString(),
-           'visible': ?isVisible?.toString(),
-         },
-       );
+  }) : super(children, {
+         'id': id,
+         'type': type,
+         'title': ?title,
+         'locked': ?locked?.toString(),
+         'pageType': ?pageType,
+         'mobile': ?mobile,
+         'version': ?version?.toString(),
+         'visible': ?isVisible?.toString(),
+       });
 }
 
 /// Renders a conditional `b:if` block in Blogger templates.
@@ -102,7 +96,7 @@ class BIf extends DomComponent {
   String get tag => 'b:if';
 
   BIf({required this.cond, Iterable<Component>? children})
-    : super(children, attributes: {'cond': cond});
+    : super(children, {'cond': cond});
 }
 
 /// Renders a conditional `b:elseif` branch inside a `b:if` block.
@@ -112,7 +106,7 @@ class BElseIf extends DomComponent {
   @override
   String get tag => 'b:elseif';
 
-  BElseIf({required this.cond}) : super(null, attributes: {'cond': cond});
+  BElseIf({required this.cond}) : super({'cond': cond});
 
   @override
   Iterable<Component> build() => [];
@@ -123,7 +117,7 @@ class BElse extends DomComponent {
   @override
   String get tag => 'b:else';
 
-  const BElse() : super(null);
+  const BElse() : super();
 
   @override
   Iterable<Component> build() => [];
@@ -143,16 +137,13 @@ class BArg extends DomComponent {
         value != null || exprValue != null,
         'BArg requires either value or exprValue to be provided.',
       ),
-      super(
-        null,
-        attributes: {
-          'name': name,
-          if (exprValue != null)
-            'expr:value': exprValue
-          else if (value != null && value.isNotEmpty)
-            'value': value,
-        },
-      );
+      super(null, {
+        'name': name,
+        if (exprValue != null)
+          'expr:value': exprValue
+        else if (value != null && value.isNotEmpty)
+          'value': value,
+      });
 
   factory BArg.expr({required String name, required String exprValue}) {
     return BArg(name: name, exprValue: exprValue);
@@ -176,10 +167,7 @@ class BLoop extends DomComponent {
     required this.varName,
     this.index,
     Iterable<Component>? children,
-  }) : super(
-         children,
-         attributes: {'values': values, 'var': varName, 'index': ?index},
-       );
+  }) : super(children, {'values': values, 'var': varName, 'index': ?index});
 }
 
 /// Writes a Blogger `data:` node with the provided value.
@@ -230,8 +218,8 @@ class BSkin extends Component {
       Text("\n"),
       CustomDomComponent(
         'b:skin',
-        attributes: {'version': version},
-        children: [
+        {'version': version},
+        [
           if (contentInCDATA == true)
             RawText('<![CDATA[\n$content\n]]>')
           else
@@ -253,7 +241,7 @@ class BInclude extends DomComponent {
   String get tag => 'b:include';
 
   BInclude({required this.name, this.data, this.cond})
-    : super(null, attributes: {'name': name, 'data': ?data, 'cond': ?cond});
+    : super({'name': name, 'data': ?data, 'cond': ?cond});
 }
 
 /// Defines a named includable fragment for later use.
@@ -265,7 +253,7 @@ class BIncludable extends DomComponent {
   String get tag => 'b:includable';
 
   BIncludable({required this.id, this.varName, Iterable<Component>? children})
-    : super(children, attributes: {'id': id, 'var': ?varName});
+    : super(children, {'id': id, 'var': ?varName});
 }
 
 /// Adds a conditional attribute entry using Blogger's `b:attr` tag.
@@ -279,17 +267,14 @@ class BAttr extends DomComponent {
   String get tag => 'b:attr';
 
   BAttr({required this.name, this.value, this.exprValue, this.cond})
-    : super(
-        null,
-        attributes: {
-          'name': name,
-          if (exprValue != null)
-            'expr:value': exprValue
-          else if ((value ?? name).isNotEmpty)
-            'value': value ?? name,
-          'cond': ?cond,
-        },
-      );
+    : super(null, {
+        'name': name,
+        if (exprValue != null)
+          'expr:value': exprValue
+        else if ((value ?? name).isNotEmpty)
+          'value': value ?? name,
+        'cond': ?cond,
+      });
 
   factory BAttr.expr({
     required String name,
@@ -317,16 +302,13 @@ class BClass extends DomComponent {
         name != null || exprName != null,
         'BClass requires either name or exprName to be provided.',
       ),
-      super(
-        null,
-        attributes: {
-          if (exprName != null)
-            'expr:name': exprName
-          else if (name != null && name.isNotEmpty)
-            'name': name,
-          'cond': ?cond,
-        },
-      );
+      super(null, {
+        if (exprName != null)
+          'expr:name': exprName
+        else if (name != null && name.isNotEmpty)
+          'name': name,
+        'cond': ?cond,
+      });
 
   factory BClass.expr(String exprName, {String? cond}) {
     return BClass(exprName: exprName, cond: cond);
@@ -349,10 +331,7 @@ class BTag extends DomComponent {
     Map<String, String>? attributes,
     this.cond,
     Iterable<Component>? children,
-  }) : super(
-         children,
-         attributes: {'name': ?name, ...?attributes, 'cond': ?cond},
-       );
+  }) : super(children, {'name': ?name, ...?attributes, 'cond': ?cond});
 }
 
 /// Evaluates an expression and renders the result in the template.
@@ -362,7 +341,7 @@ class BEval extends DomComponent {
   @override
   String get tag => 'b:eval';
 
-  BEval({required this.expr}) : super(null, attributes: {'expr': expr});
+  BEval({required this.expr}) : super({'expr': expr});
 
   @override
   Iterable<Component> build() => [];
@@ -380,7 +359,7 @@ class BWith extends DomComponent {
     required this.varName,
     required this.value,
     Iterable<Component>? children,
-  }) : super(children, attributes: {'var': varName, 'value': value});
+  }) : super(children, {'var': varName, 'value': value});
 }
 
 /// Renders a Blogger switch block.
@@ -391,7 +370,7 @@ class BSwitch extends DomComponent {
   String get tag => 'b:switch';
 
   BSwitch({required this.varName, Iterable<Component>? children})
-    : super(children, attributes: {'var': varName});
+    : super(children, {'var': varName});
 }
 
 /// Creates a case branch inside a Blogger `b:switch` block.
@@ -401,7 +380,7 @@ class BCase extends DomComponent {
   @override
   String get tag => 'b:case';
 
-  BCase({required this.value}) : super(null, attributes: {'value': value});
+  BCase({required this.value}) : super({'value': value});
 
   @override
   Iterable<Component> build() => [];
@@ -423,7 +402,7 @@ class BMessage extends DomComponent {
   String get tag => 'b:message';
 
   BMessage({required this.name, Iterable<Component>? children})
-    : super(children, attributes: {'name': name});
+    : super(children, {'name': name});
 }
 
 /// Describes a template variable for Blogger skin or configuration metadata.
@@ -509,15 +488,11 @@ class BTemplateSkin extends Component {
     Text("\n"),
     XmlComment('prettier-ignore'),
     Text("\n"),
-    CustomDomComponent(
-      'b:template-skin',
-      children: [
-        if (contentInCDATA == true) RawText('<![CDATA[\n'),
-        Text(content, escape: !contentInCDATA!),
-        if (contentInCDATA == true) RawText('\n]]>'),
-      ],
-      attributes: attributes,
-    ),
+    CustomDomComponent('b:template-skin', [
+      if (contentInCDATA == true) RawText('<![CDATA[\n'),
+      Text(content, escape: !contentInCDATA!),
+      if (contentInCDATA == true) RawText('\n]]>'),
+    ], attributes),
     Text("\n"),
   ];
 }
@@ -532,14 +507,7 @@ class BTemplateScript extends DomComponent {
   String get tag => 'b:template-script';
 
   BTemplateScript({required this.name, required this.version, this.async})
-    : super(
-        null,
-        attributes: {
-          'name': name,
-          'version': version,
-          'async': ?async?.toString(),
-        },
-      );
+    : super({'name': name, 'version': version, 'async': ?async?.toString()});
 
   @override
   Iterable<Component> build() => [];
@@ -558,15 +526,12 @@ class BParam extends DomComponent {
         value != null || exprValue != null,
         'BParam requires either value or exprValue to be provided.',
       ),
-      super(
-        null,
-        attributes: {
-          if (exprValue != null)
-            'expr:value': exprValue
-          else if (value != null && value.isNotEmpty)
-            'value': value,
-        },
-      );
+      super({
+        if (exprValue != null)
+          'expr:value': exprValue
+        else if (value != null && value.isNotEmpty)
+          'value': value,
+      });
 
   factory BParam.expr(String exprValue) {
     return BParam(exprValue: exprValue);
@@ -584,7 +549,7 @@ class BDefaultMarkup extends DomComponent {
   String get tag => 'b:defaultmarkup';
 
   BDefaultMarkup({required this.type, Iterable<Component>? children})
-    : super(children, attributes: {'type': type});
+    : super(children, {'type': type});
 }
 
 /// Container for multiple default markup declarations.

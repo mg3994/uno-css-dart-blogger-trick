@@ -1,14 +1,14 @@
 import '../../framework/framework.dart' show Component;
 
 /// A text node that is rendered with optional XML escaping.
-final class Text extends Component {
+class Text implements Component {
   final String value;
   final bool escape;
 
   const Text(this.value, {this.escape = true});
 
   @override
-  Iterable<Component> build() => [];
+  Iterable<Component> build() => const [];
 
   @override
   bool operator ==(Object other) {

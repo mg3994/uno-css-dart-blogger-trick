@@ -17,8 +17,10 @@ class Renderer {
       sb.write(component.escape ? escapeXml(component.value) : component.value);
     } else if (component is DomComponent) {
       sb.write('<${component.tag}');
-      if (component.attributes != null) {
-        for (var entry in component.attributes!.entries) {
+      
+      // Because `attributes` is now never null, we can safely check `isNotEmpty`
+      if (component.attributes.isNotEmpty) {
+        for (var entry in component.attributes.entries) {
           sb.write(' ${entry.key}="${escapeXml(entry.value)}"');
         }
       }

@@ -3,10 +3,10 @@ import 'package:collection/collection.dart';
 import '../dom/raw_text/raw_text.dart';
 
 /// A node in the Blogger theme component tree.
-///
-/// All renderable objects in this package implement [Component].
 abstract class Component {
   const Component();
+
+  /// Builds this component's children.
   Iterable<Component> build();
 
   /// Creates a text node component.
@@ -14,10 +14,10 @@ abstract class Component {
 
   /// Creates a custom DOM component node.
   const factory Component.element(
-    String tag, {
+    String tag,
     List<Component>? children,
     Map<String, String>? attributes,
-  }) = CustomDomComponent;
+  ) = CustomDomComponent;
 
   /// Groups components together without creating a DOM node.
   const factory Component.fragment([Iterable<Component> children]) = Fragment;
@@ -26,16 +26,39 @@ abstract class Component {
   const factory Component.empty() = Fragment.empty;
 }
 
-/// A DOM-like element with a tag, attributes, and child components.
-abstract class DomComponent extends Component {
-  String get tag;
-  final Iterable<Component>? children;
-  final Map<String, String>? attributes;
+/// A component that produces an actual DOM element.
+abstract interface class Element extends Component {
+  const Element();
 
-  const DomComponent(this.children, {this.attributes});
+  String get tag;
+}
+
+/// A DOM-like element with a tag, attributes, and child components.
+///
+/// Positional arguments are detected by their types.
+/// The order does not matter:
+/// Map<String, String>  -> attributes
+/// Iterable<Component>  -> children
+abstract class DomComponent<A, B> implements Element {
+  final A? _first;
+  final B? _second;
+
+  const DomComponent([this._first, this._second]);
+
+  Map<String, String> get attributes => switch ((_first, _second)) {
+    (Map<String, String> attrs, _) => attrs,
+    (_, Map<String, String> attrs) => attrs,
+    _ => const {},
+  };
+
+  Iterable<Component> get children => switch ((_first, _second)) {
+    (Iterable<Component> kids, _) => kids,
+    (_, Iterable<Component> kids) => kids,
+    _ => const [],
+  };
 
   @override
-  Iterable<Component> build() => children ?? [];
+  Iterable<Component> build() => children;
 
   @override
   bool operator ==(Object other) {
@@ -58,19 +81,17 @@ abstract class DomComponent extends Component {
 }
 
 /// Concrete implementation of [DomComponent] used for custom or dynamic XML elements.
-class CustomDomComponent extends DomComponent {
+///
+/// Example: `CustomDomComponent('my-tag', {'class': 'foo'}, [Text('Hi')])`
+class CustomDomComponent<A, B> extends DomComponent<A, B> {
   @override
   final String tag;
 
-  const CustomDomComponent(
-    this.tag, {
-    Iterable<Component>? children,
-    Map<String, String>? attributes,
-  }) : super(children, attributes: attributes);
+  const CustomDomComponent(this.tag, [super.first, super.second]);
 }
 
 /// A wrapper for grouping components without introducing a DOM tag.
-class Fragment extends Component {
+final class Fragment implements Component {
   final Iterable<Component> children;
 
   const Fragment([this.children = const []]);
