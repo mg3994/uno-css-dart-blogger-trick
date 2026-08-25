@@ -24,3 +24,6 @@ class Text implements Component {
 final class RawText extends Text {
   const RawText(super.value, {super.escape = false});
 }
+
+
+// typedef EitherListChildrenOrMapStringString = Iterable

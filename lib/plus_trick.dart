@@ -12,51 +12,46 @@ final Component plusUiTemplate = Fragment([
         varName: 'is_amp',
         value: 'data:view.isPost',
         children: [
-          CustomDomComponent(
-            'head',
-             [
-              const title([BData(value: 'view.title.escaped')]),
-              BInclude(name: 'all-head-content', data: 'blog'),
-              const XmlComment(' Conditional Scripts Loading '),
-              BIf(
-                cond: 'data:is_amp == "true"',
-                children: const [
-                  meta({'charset': 'utf-8'}),
-                  meta(
-              {
-                      'content':
-                          'width=device-width,minimum-scale=1,initial-scale=1',
-                      'name': 'viewport',
-                    },
-                  ),
-                  script(
-                  
-                     {
-                      'async': 'async',
-                      'src': 'https://cdn.ampproject.org/v0.js',
-                    },
-                  ),
-                ],
-              ),
-              BElse(),
-              const script(
-                [
-                  RawText(
-                    '//<![CDATA[\nconsole.log("Loading standard dynamic JavaScript...");\n//]]>',
-                  ),
-                ],
-                {'type': 'text/javascript'},
-              ),
-              BIf(
-                cond: 'false',
-                children: const [BSkin('/* CSS Styles go here */')],
-              ),
-              BIf(
-                cond: 'data:is_amp == "true"',
-                children: const [RawText('&lt;!--<head/>--&gt;')],
-              ),
-            ],
-          ),
+          CustomDomComponent('head', [
+            const title(
+              [BData(value: 'view.title.escaped')],
+             
+            ),
+            BInclude(name: 'all-head-content', data: 'blog'),
+            const XmlComment(' Conditional Scripts Loading '),
+            BIf(
+              cond: 'data:is_amp == "true"',
+              children: const [
+                meta({'charset': 'utf-8'}),
+                meta({
+                  'content':
+                      'width=device-width,minimum-scale=1,initial-scale=1',
+                  'name': 'viewport',
+                }),
+                script({
+                  'async': 'async',
+                  'src': 'https://cdn.ampproject.org/v0.js',
+                }),
+              ],
+            ),
+            BElse(),
+            const script(
+              [
+                RawText(
+                  '//<![CDATA[\nconsole.log("Loading standard dynamic JavaScript...");\n//]]>',
+                ),
+              ],
+              {'type': 'text/javascript'},
+            ),
+            BIf(
+              cond: 'false',
+              children: const [BSkin('/* CSS Styles go here */')],
+            ),
+            BIf(
+              cond: 'data:is_amp == "true"',
+              children: const [RawText('&lt;!--<head/>--&gt;')],
+            ),
+          ]),
           body([
             BSection(
               className: 'animate-bounce m-20 c-yellow   bg-primary text-white bg-gray-200 text-gray-500',
@@ -123,7 +118,7 @@ final Component plusUiTemplate = Fragment([
                         BElse(),
                         const h1(
                           [Component.text('AMP / Non-AMP Tricking System')],
-                       {'class': "m-1"},
+                          {'class': "m-1"},
                         ),
                         const p([
                           Component.text(
@@ -158,7 +153,7 @@ final Component plusUiTemplate = Fragment([
         ],
       ),
     ],
-   const {
+    const {
       'b:css': 'false',
       'b:defaultwidgetversion': '2',
       'b:layoutsVersion': '3',
@@ -176,6 +171,3 @@ final Component plusUiTemplate = Fragment([
 void main(List<String> args) {
   print(plusUiTemplate.render());
 }
-
-
-

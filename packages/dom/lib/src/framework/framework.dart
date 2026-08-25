@@ -41,6 +41,9 @@ abstract interface class Element extends Component {
 /// The order does not matter:
 /// Map &lt;String, String&gt;  -> attributes
 /// Iterable &lt;Component&gt;  -> children
+/// But the case scenerio is if First one is Assigned as Map<String, String>
+///  then the second  can't be Map<String, String> it
+///  either be nothing or a Iterable<Component> or vice versa
 abstract class DomComponent<A, B> implements Element {
   final A? _first;
   final B? _second;
@@ -50,12 +53,17 @@ abstract class DomComponent<A, B> implements Element {
   Map<String, String> get attributes => switch ((_first, _second)) {
     (Map<String, String> attrs, _) => attrs,
     (_, Map<String, String> attrs) => attrs,
+    (Map<String, String> attr1, Map<String, String> attr2) => {
+      ...attr1,
+      ...attr2,
+    },
     _ => const {},
   };
 
   Iterable<Component> get children => switch ((_first, _second)) {
     (Iterable<Component> kids, _) => kids,
     (_, Iterable<Component> kids) => kids,
+    (Iterable<Component> a, Iterable<Component> b) => a.followedBy(b),
     _ => const [],
   };
 
